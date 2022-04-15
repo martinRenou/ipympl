@@ -78,11 +78,11 @@ jobs:
       - name: Install dependencies
         run: mamba install python=${{ matrix.python-version }} pip yarn jupyterlab=${{ matrix.jlab_version }} jupyter-packaging nbval pytest
 
-      - if: ${{ matrix.mpl-version }} == 'latest'
+      - if: matrix.mpl-version == 'latest'
         name: Install latest Matplotlib
         run: pip install --upgrade --pre --index-url https://pypi.anaconda.org/scipy-wheels-nightly/simple --extra-index-url https://pypi.org/simple matplotlib
 
-      - if: ${{ matrix.mpl-version }} != 'latest'
+      - if: matrix.mpl-version != 'latest'
         name: Install matplotlib pinned
         run: mamba install matplotlib=${{ matrix.mpl-version}}.*
 
