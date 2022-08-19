@@ -127,7 +127,9 @@ jobs:
         run: pytest .
 
       - name: Install Galata test dependencies
-        run: yarn install
+        run: |
+          yarn install
+          yarn playwright install chromium
         working-directory: ui-tests
 
       - name: Launch JupyterLab
