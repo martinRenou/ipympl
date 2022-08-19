@@ -131,7 +131,7 @@ jobs:
         working-directory: ui-tests
 
       - name: Launch JupyterLab
-        run: yarn run start-jlab:detached
+        run: yarn run start:detached
         working-directory: ui-tests
 
       - name: Wait for JupyterLab
@@ -149,4 +149,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ui-test-output
-          path: ui-tests/test-output
+          path: |
+            ui-tests/playwright-report
+            ui-tests/test-results
