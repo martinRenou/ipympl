@@ -57,10 +57,8 @@ jobs:
         include:
           - python: '3.10'
             dist: 'ipympl*.tar.gz'
-            jlab_version: 3
           - python: '3.9'
             dist: 'ipympl*.whl'
-            jlab_version: 2.3.2
 
     steps:
       - name: Checkout
@@ -75,7 +73,7 @@ jobs:
           channels: conda-forge
 
       - name: Install dependencies
-        run: mamba install python=${{ matrix.python-version }} pip yarn nodejs=16 jupyterlab=${{ matrix.jlab_version }} jupyter-packaging nbval pytest ipywidgets
+        run: mamba install python=${{ matrix.python-version }} pip yarn nodejs=16 jupyterlab jupyter-packaging nbval pytest ipywidgets
 
       - if: matrix.mpl-version == 'latest'
         name: Install latest Matplotlib
@@ -94,10 +92,6 @@ jobs:
         run: |
           cd dist
           pip install -vv ${{ matrix.dist }}
-
-      - name: Manually install labextension for lab2
-        if: ${{ matrix.jlab_version }} == 2.3.2
-        run: jupyter labextension install --debug .
 
       - name: Test installation files
         run: |
