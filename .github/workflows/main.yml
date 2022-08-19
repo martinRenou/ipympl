@@ -54,7 +54,6 @@ jobs:
         os: [ubuntu, macos]
         python: ['3.10', '3.9']
         mpl-version: ['3.5', 'latest']
-        ipywidgets-version: ['7.7', 'latest']
         include:
           - python: '3.10'
             dist: 'ipympl*.tar.gz'
@@ -76,7 +75,7 @@ jobs:
           channels: conda-forge
 
       - name: Install dependencies
-        run: mamba install python=${{ matrix.python-version }} pip yarn nodejs=16 jupyterlab=${{ matrix.jlab_version }} jupyter-packaging nbval pytest
+        run: mamba install python=${{ matrix.python-version }} pip yarn nodejs=16 jupyterlab=${{ matrix.jlab_version }} jupyter-packaging nbval pytest ipywidgets
 
       - if: matrix.mpl-version == 'latest'
         name: Install latest Matplotlib
@@ -85,14 +84,6 @@ jobs:
       - if: matrix.mpl-version != 'latest'
         name: Install matplotlib pinned
         run: mamba install matplotlib=${{ matrix.mpl-version}}.*
-
-      - if: ${{ matrix.ipywidgets-version }} == 'latest'
-        name: Install latest ipywidgets
-        run: pip install --upgrade --pre --index-url https://pypi.anaconda.org/scipy-wheels-nightly/simple --extra-index-url https://pypi.org/simple ipywidgets
-
-      - if: ${{ matrix.ipywidgets-version }} != 'latest'
-        name: Install ipywidgets pinned
-        run: mamba install ipywidgets
 
       - uses: actions/download-artifact@v2
         with:
