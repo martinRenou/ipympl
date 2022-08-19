@@ -6,6 +6,10 @@ import { expect } from '@playwright/test';
 import * as path from 'path';
 const klaw = require('klaw-sync');
 
+async function sleep(time: number) {
+    return await new Promise((resolve) => setTimeout(resolve, time));
+}
+
 const filterUpdateNotebooks = (item) => {
     const basename = path.basename(item.path);
     return basename.includes('_update');
@@ -37,6 +41,7 @@ const testCellOutputs = async (
             onAfterCellRun: async (cellIndex: number) => {
                 const cell = await page.notebook.getCellOutput(cellIndex);
                 if (cell) {
+                    await sleep(500);
                     results.push(await cell.screenshot());
                     numCellImages++;
                 }
@@ -78,6 +83,7 @@ const testUpdates = async (page: IJupyterLabPageFixture, tmpPath: string) => {
                 // Always get first cell output which must contain the plot
                 const cell = await page.notebook.getCellOutput(0);
                 if (cell) {
+                    await sleep(500);
                     results.push(await cell.screenshot());
                     cellCount++;
                 }
