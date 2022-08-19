@@ -76,7 +76,7 @@ jobs:
           channels: conda-forge
 
       - name: Install dependencies
-        run: mamba install python=${{ matrix.python-version }} pip yarn jupyterlab=${{ matrix.jlab_version }} jupyter-packaging nbval pytest
+        run: mamba install python=${{ matrix.python-version }} pip yarn nodejs=16 jupyterlab=${{ matrix.jlab_version }} jupyter-packaging nbval pytest
 
       - if: matrix.mpl-version == 'latest'
         name: Install latest Matplotlib
